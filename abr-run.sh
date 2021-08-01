@@ -43,25 +43,6 @@ function backup {
     git push
 }
 
-function addCronjob {
-    # Declare local variable for cleaner code
-    crontask = bash ./run.sh
-    # If crontask doesn't already exist, add it (recurs at 12pm, every day)
-    grep '${crontask}' /etc/crontab || echo '00 12 * * 1-7 ${crontask}' >> /etc/crontab
-}
-
-DEPLOY_PATH=/usr/local/bin
-
-function deploy {
-    # Remove current installation first.
-    if ls $DEPLOY_PATH/deploy.sh 1> /dev/null 2>&1; then
-        sudo rm $DEPLOY_PATH/deploy.sh
-    fi
-
-    # Copy deploy.sh to /usr/local/bin
-    sudo cp deploy.sh $DEPLOY_PATH
-}
-
 function run {
     # End the tmux session
     tmux send -t tshock exit ENTER
